@@ -27,7 +27,6 @@ local colors = {
   magenta  = '#c678dd',
   blue     = '#51afef',
   red      = '#ec5f67',
-  white    = '#FFFFFF',
 }
 
 local conditions = {
@@ -100,13 +99,13 @@ ins_left {
 ins_left {
   -- mode component
   function()
-    return ''
+    return ''
   end,
   color = function()
     -- auto change color according to neovims mode
     local mode_color = {
-      n = colors.white,
-      i = colors.blue,
+      n = colors.red,
+      i = colors.green,
       v = colors.blue,
       [''] = colors.blue,
       V = colors.blue,
