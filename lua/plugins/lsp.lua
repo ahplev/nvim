@@ -52,13 +52,12 @@ end
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 -- Setup neovim lua configuration
-require('neodev').setup()
+-- require('neodev').setup()
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
--- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 local lspconfig = require "lspconfig"
 
@@ -70,11 +69,18 @@ mason_lspconfig.setup_handlers {
     }
   end,
   ["rust_analyzer"] = function ()
-    require("rust-tools").setup {}
-    lspconfig.rust_analyzer.setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
+    local rt = require("rust-tools")
+    rt.setup {
+      server = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
     }
+    rt.inlay_hints.enable()
+--    lspconfig.rust_analyzer.setup {
+--      capabilities = capabilities,
+--      on_attach = on_attach,
+--    }
   end,
   ["lua_ls"] = function ()
     lspconfig.lua_ls.setup {
